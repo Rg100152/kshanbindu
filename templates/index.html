@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}KshanBindu · Book a Moment with Raj Gautam{% endblock %}
+
+{% block content %}
+<section class="hero-banner">
+  <div class="hero-shade"></div>
+  <div class="hero-content">
+    <span class="hero-kicker">SMART APPOINTMENT BOOKING &amp; REMINDER STUDIO</span>
+    <h1>Every moment scheduled.<br><span>Every reminder delivered.</span></h1>
+    <p>Pick an event, choose a date, lock a conflict-free slot — and get a calendar invite in one click.</p>
+    <div class="hero-chips">
+      <span>⚡ Instant confirmation</span>
+      <span>🔒 Double-booking protected</span>
+      <span>🔔 Smart reminders</span>
+    </div>
+  </div>
+  <div class="hero-stamp">
+    <span>क्षणबिंदु</span>
+    <small>MAKE EVERY MOMENT COUNT</small>
+  </div>
+</section>
+
+<section class="scheduler" aria-label="Three-pane appointment scheduler">
+
+  <!-- PANE 1 — HOST & EVENT ------------------------------------------------ -->
+  <aside class="pane pane-host">
+    <div class="host-top">
+      <div class="avatar-wrap">
+        <img src="{{ url_for('static', filename='assets/avatar.jpg') }}" alt="Raj Gautam">
+        <span class="avatar-online" title="Available for bookings"></span>
+      </div>
+      <div>
+        <span class="host-eyebrow">YOUR HOST</span>
+        <h2>Raj Gautam <span class="verified">✓</span></h2>
+        <p class="host-location">📍 Jaunpur, Uttar Pradesh, India</p>
+      </div>
+    </div>
+    <p class="host-bio">Full-stack builder, Linux enthusiast and ethical-hacking learner. Let's turn your idea into a working, well-designed product.</p>
+
+    <div class="host-tags">
+      <span>Python · Flask</span><span>Go · Linux</span><span>Web Engineering</span>
+    </div>
+
+    <div class="pane-divider"></div>
+    <span class="section-eyebrow light">01 / CHOOSE A SESSION</span>
+    <div class="event-list" id="event-list">
+      {% for event in event_types %}
+      <button type="button"
+              class="event-card {{ 'active' if loop.first else '' }}"
+              data-event-id="{{ event.id }}"
+              data-duration="{{ event.duration }}"
+              data-accent="{{ event.accent }}">
+        <span class="event-radio"></span>
+        <span class="event-copy">
+          <strong>{{ event.name }}</strong>
+          <small>{{ event.description }}</small>
+        </span>
+        <span class="event-duration">{{ event.duration }}<small>min</small></span>
+      </button>
+      {% endfor %}
+    </div>
+
+    <div class="host-extras">
+      <div class="extra-badge" id="duration-badge">
+        <span class="extra-icon">⏱</span>
+        <span><small>SESSION LENGTH</small><strong id="duration-text">30 minutes</strong></span>
+      </div>
+      <div class="extra-badge">
+        <span class="extra-icon">🎥</span>
+        <span><small>VIDEO ROOM</small><strong>Jitsi link auto-generated</strong></span>
+      </div>
+    </div>
+    <p class="host-footnote">✉️ Email + meeting link only — no phone number, ever.</p>
+  </aside>
+
+  <!-- PANE 2 — CALENDAR ---------------------------------------------------- -->
+  <section class="pane pane-calendar">
+    <div class="pane-heading">
+      <span class="section-eyebrow">02 / PICK A DATE</span>
+      <h2>Choose your day</h2>
+      <p>Available dates glow indigo. Sundays are reserved for rest.</p>
+    </div>
+
+    <div class="calendar-toolbar">
+      <button type="button" id="prev-month" class="month-nav" aria-label="Previous month">‹</button>
+      <h3 id="calendar-month-label">—</h3>
+      <button type="button" id="next-month" class="month-nav" aria-label="Next month">›</button>
+    </div>
+
+    <div class="weekday-row" aria-hidden="true">
+      <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span>
+      <span>Fri</span><span>Sat</span><span>Sun</span>
+    </div>
+    <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="Monthly calendar"></div>
+
+    <div class="calendar-legend">
+      <span><i class="legend available"></i> Available</span>
+      <span><i class="legend today"></i> Today</span>
+      <span><i class="legend closed"></i> Closed / past</span>
+    </div>
+    <div class="calendar-tip">
+      <span class="tip-icon">✦</span>
+      <p>Dates update instantly when you switch session types — longer sessions need longer free windows.</p>
+    </div>
+  </section>
+
+  <!-- PANE 3 — SLOTS & BOOKING -------------------------------------------- -->
+  <section class="pane pane-slots">
+    <div class="pane-heading">
+      <span class="section-eyebrow">03 / LOCK YOUR SLOT</span>
+      <h2 id="slots-title">Available moments</h2>
+      <p id="selected-date-label">Select a date to see open slots.</p>
+    </div>
+
+    <div class="slot-toolbar">
+      <span class="slot-count" id="slot-count">—</span>
+      <span class="timezone-chip">🕒 IST · Asia/Kolkata</span>
+    </div>
+
+    <div class="slot-grid" id="slot-grid">
+      <div class="empty-state">
+        <span>📅</span>
+        <p>Your open moments will appear here.</p>
+      </div>
+    </div>
+
+    <form id="booking-form" class="booking-form" hidden>
+      <div class="form-head">
+        <strong>Reserve <span id="form-slot">—</span></strong>
+        <button type="button" id="clear-slot" class="link-button">change</button>
+      </div>
+      <label>Your name
+        <input type="text" id="client-name" name="client_name" maxlength="100" placeholder="e.g. Aarav Sharma" required>
+      </label>
+      <label>Email address
+        <input type="email" id="client-email" name="client_email" maxlength="160" placeholder="you@example.com" required>
+      </label>
+      <label>What would you like to discuss? <span class="optional">(optional)</span>
+        <textarea id="notes" name="notes" maxlength="500" rows="2" placeholder="A short brief helps me prepare."></textarea>
+      </label>
+      <button type="submit" class="primary-button" id="book-submit">Confirm my moment <span>→</span></button>
+      <p class="form-note">No phone number required. You'll receive a calendar invite link instantly.</p>
+    </form>
+
+    <div id="success-panel" class="success-panel" hidden>
+      <span class="success-icon">✓</span>
+      <strong>Moment reserved!</strong>
+      <p id="success-message">Raj will confirm shortly.</p>
+      <a id="ics-link" class="primary-button" href="#" download>↓ Download .ics invite</a>
+      <a id="jitsi-link" class="secondary-button" href="#" target="_blank" rel="noopener">🎥 Open video room</a>
+      <button type="button" id="book-another" class="link-button">Book another moment</button>
+    </div>
+  </section>
+</section>
+
+<div id="confirm-modal" class="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button type="button" id="modal-close" class="modal-close" aria-label="Close">×</button>
+    <span class="modal-kicker">ONE LAST LOOK</span>
+    <h3 id="modal-title">Confirm your booking</h3>
+    <div class="modal-summary" id="modal-summary"></div>
+    <div class="modal-actions">
+      <button type="button" id="modal-cancel" class="secondary-button">Go back</button>
+      <button type="button" id="modal-confirm" class="primary-button">Yes, book it <span>→</span></button>
+    </div>
+  </div>
+</div>
+{% endblock %}

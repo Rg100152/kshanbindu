@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}KshanBindu · Host Dashboard{% endblock %}
+
+{% block content %}
+<section class="dashboard-head">
+  <div>
+    <span class="section-eyebrow">HOST CONTROL ROOM · MIDNIGHT INDIGO</span>
+    <h1>Good to see you, Raj <span class="wave">👋</span></h1>
+    <p>Your next moment is loading below. Approve requests, cancel conflicts and stay ahead with smart alerts.</p>
+  </div>
+  <div class="dashboard-head-badge">
+    <span>STUDIO STATUS</span>
+    <strong><span class="pulse-dot"></span> All systems go</strong>
+  </div>
+</section>
+
+<section class="countdown-panel" id="next-appointment-card">
+  <div class="countdown-copy">
+    <span class="countdown-kicker">⏳ NEXT UPCOMING APPOINTMENT</span>
+    <h2 id="next-title">Checking your schedule…</h2>
+    <p id="next-meta">Live countdown appears here.</p>
+    <div class="countdown-actions">
+      <a id="next-jitsi" class="primary-button" href="#" target="_blank" rel="noopener">🎥 Join video room</a>
+      <a id="ics-next" class="secondary-button" href="#" download>↓ .ics invite</a>
+    </div>
+  </div>
+  <div class="clock-block">
+    <div class="clock" id="countdown-timer">
+      <div><strong id="cd-days">--</strong><small>DAYS</small></div>
+      <span>:</span>
+      <div><strong id="cd-hours">--</strong><small>HRS</small></div>
+      <span>:</span>
+      <div><strong id="cd-mins">--</strong><small>MIN</small></div>
+      <span>:</span>
+      <div><strong id="cd-secs">--</strong><small>SEC</small></div>
+    </div>
+    <div class="reminder-control">
+      <label class="switch-row">
+        <input type="checkbox" id="reminder-toggle">
+        <span class="switch"></span>
+        <span><strong>Browser reminder</strong><small>Audio + visual alert 5 min before</small></span>
+      </label>
+      <button type="button" id="test-alert" class="link-button">Test alert 🔔</button>
+    </div>
+  </div>
+</section>
+
+<section class="stats-row">
+  <div class="stat-card"><span class="stat-icon indigo">📅</span><div><strong id="stat-upcoming">{{ stats.upcoming }}</strong><small>Upcoming</small></div></div>
+  <div class="stat-card"><span class="stat-icon amber">⏳</span><div><strong id="stat-pending">{{ stats.pending }}</strong><small>Awaiting approval</small></div></div>
+  <div class="stat-card"><span class="stat-icon green">✓</span><div><strong id="stat-approved">{{ stats.approved }}</strong><small>Approved</small></div></div>
+  <div class="stat-card"><span class="stat-icon slate">📚</span><div><strong id="stat-total">{{ stats.total }}</strong><small>Total bookings</small></div></div>
+</section>
+
+<section class="dashboard-grid">
+  <div class="panel bookings-panel">
+    <div class="panel-head">
+      <div>
+        <span class="section-eyebrow">BOOKING REQUESTS</span>
+        <h2>Appointment queue</h2>
+      </div>
+      <div class="filter-tabs" role="group" aria-label="Filter bookings">
+        <button type="button" class="filter active" data-filter="all">All</button>
+        <button type="button" class="filter" data-filter="pending">Pending</button>
+        <button type="button" class="filter" data-filter="approved">Approved</button>
+        <button type="button" class="filter" data-filter="cancelled">Cancelled</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="bookings-table">
+        <thead>
+          <tr><th>Client</th><th>Session</th><th>Date &amp; time</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="bookings-body">
+          <tr><td colspan="5" class="table-empty">Loading bookings…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <aside class="panel event-panel">
+    <div class="panel-head">
+      <div>
+        <span class="section-eyebrow">SESSION CATALOG</span>
+        <h2>Event types</h2>
+      </div>
+    </div>
+    <form id="event-type-form" class="event-type-form">
+      <label>Session name
+        <input type="text" id="et-name" maxlength="80" placeholder="e.g. 20-Min Quick Call" required>
+      </label>
+      <div class="form-row">
+        <label>Duration (min)
+          <input type="number" id="et-duration" min="15" max="480" step="15" value="30" required>
+        </label>
+        <label>Accent
+          <input type="color" id="et-accent" value="#4F46E5">
+        </label>
+      </div>
+      <label>Short description
+        <textarea id="et-description" maxlength="240" rows="2" placeholder="What is this session about?"></textarea>
+      </label>
+      <button type="submit" class="primary-button full">+ Create event type</button>
+    </form>
+    <div id="event-type-list" class="event-type-list"></div>
+  </aside>
+</section>
+{% endblock %}

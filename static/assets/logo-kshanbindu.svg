@@ -1,0 +1,10 @@
+<svg width="255" height="52" viewBox="0 0 255 52" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logo-title">
+  <title id="logo-title">KshanBindu Scheduler — Jaunpur, UP</title>
+  <rect x="4" y="6" width="40" height="40" rx="12" fill="#0F172A" stroke="#6366F1" stroke-width="2.2"/>
+  <rect x="12" y="15" width="24" height="22" rx="4" stroke="#818CF8" stroke-width="2"/>
+  <line x1="12" y1="22" x2="36" y2="22" stroke="#6366F1" stroke-width="2"/>
+  <circle cx="24" cy="29" r="3.5" fill="#F59E0B"/>
+  <circle cx="37" cy="13" r="3.5" fill="#10B981"/>
+  <text x="54" y="29" fill="#0F172A" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="21" letter-spacing="0.5">Kshan<tspan fill="#4F46E5">Bindu</tspan></text>
+  <text x="55" y="42" fill="#64748B" font-family="sans-serif" font-weight="600" font-size="9.5" letter-spacing="1.5">SCHEDULER • JAUNPUR, UP</text>
+</svg>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="KshanBindu — a crisp 3-pane appointment booking scheduler with conflict-free slots, .ics invites and smart reminders. Built by Raj Gautam, Jaunpur, UP.">
+  <title>{% block title %}KshanBindu · Smart Appointment Studio{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='assets/logo-kshanbindu.svg') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/kshanbindu.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}" aria-label="KshanBindu home">
+      <img src="{{ url_for('static', filename='assets/logo-kshanbindu.svg') }}" alt="KshanBindu Scheduler logo">
+    </a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="{{ url_for('index') }}" class="{{ 'active' if request.path == '/' else '' }}">
+        <span class="nav-dot"></span>Booking Studio
+      </a>
+      <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.path == '/dashboard' else '' }}">
+        <span class="nav-dot"></span>Host Dashboard
+      </a>
+    </nav>
+    <div class="topbar-meta">
+      <span class="status-pill"><span class="pulse-dot"></span> System live</span>
+      <span class="place-pill">📍 Jaunpur, UP</span>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="{{ url_for('static', filename='assets/logo-kshanbindu.svg') }}" alt="KshanBindu">
+        <p>{{ tagline|default('Every Moment Scheduled, Every Reminder Delivered.') }}</p>
+      </div>
+      <div class="credit-card">
+        <span class="credit-label">ENGINEERED WITH ♥ IN JAUNPUR</span>
+        <strong>Raj Gautam</strong>
+        <span class="credit-sub">Full-Stack Builder · Linux Enthusiast · Ethical Hacking Learner</span>
+        <div class="credit-links">
+          <a href="mailto:graj13099@gmail.com">graj13099@gmail.com</a>
+          <a href="https://instagram.com/linux.userraj" target="_blank" rel="noopener">@linux.userraj</a>
+          <a href="https://github.com/Rg100152" target="_blank" rel="noopener">github.com/Rg100152</a>
+        </div>
+      </div>
+      <span class="footer-year">© 2026 KshanBindu</span>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='js/scheduler.js') }}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
